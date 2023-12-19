@@ -1,13 +1,13 @@
-package com.citefred.ldwspring;
+package com.citefred.ldwspring.book.springboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LdwSpringApplication {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(LdwSpringApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 }
