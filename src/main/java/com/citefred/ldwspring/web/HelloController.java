@@ -1,4 +1,4 @@
-package com.citefred.ldwspring.book.springboot.web;
+package com.citefred.ldwspring.web;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
