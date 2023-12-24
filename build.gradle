@@ -30,6 +30,10 @@ dependencies {
     // in-memory H2 DB for testing
     implementation 'com.h2database:h2'
 
+    // Mustache
+    implementation 'org.springframework.boot:spring-boot-starter-mustache'
+
+
 }
 
 tasks.named('test') {
