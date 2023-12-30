@@ -1,22 +1,31 @@
 package com.citefred.ldwspring.web;
 
+import com.citefred.ldwspring.config.auth.dto.SessionUser;
 import com.citefred.ldwspring.service.PostsService;
 import com.citefred.ldwspring.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.h2.engine.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
+import javax.servlet.http.HttpSession;
+
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
     private final PostsService postsService;
+    private final HttpSession httpSession;
 
     @GetMapping("/")
     public String index(Model model){
         model.addAttribute("posts", postsService.findAllDesc());
+        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("userName", user.getName());
+        }
         return "index";
     }
 

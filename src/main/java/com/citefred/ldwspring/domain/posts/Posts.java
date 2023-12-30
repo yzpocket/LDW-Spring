@@ -1,10 +1,11 @@
 package com.citefred.ldwspring.domain.posts;
 
 import com.citefred.ldwspring.domain.BaseTimeEntity;
-import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
