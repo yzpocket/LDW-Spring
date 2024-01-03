@@ -40,6 +40,12 @@ dependencies {
     // JDBC
     implementation 'org.springframework.session:spring-session-jdbc'
 
+    // Jackson - Deserialize Troubleshoot
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+
+
 }
 
 tasks.named('test') {
