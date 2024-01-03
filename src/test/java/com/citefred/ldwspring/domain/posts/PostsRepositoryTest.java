@@ -1,5 +1,8 @@
 package com.citefred.ldwspring.domain.posts;
 
+import com.citefred.ldwspring.domain.user.Role;
+import com.citefred.ldwspring.domain.user.User;
+import com.citefred.ldwspring.domain.user.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +22,10 @@ public class PostsRepositoryTest {
     
     @Autowired
     PostsRepository postsRepository;
-    
+
+    @Autowired
+    private UserRepository userRepository;
+
     //@After
     @AfterEach
     public void cleanup(){
@@ -31,11 +37,17 @@ public class PostsRepositoryTest {
         //given
         String title = "테스트 게시글";
         String content = "테스트 본문";
-        
+
+        User user = userRepository.save(User.builder()
+                .name("Test User")
+                .email("test@example.com")
+                .role(Role.USER)
+                .build());
+
         postsRepository.save(Posts.builder()
                 .title(title)
                 .content(content)
-                .author("citefred@gmail.com")
+                .author(user)
                 .build());
                 
         //when
@@ -51,10 +63,17 @@ public class PostsRepositoryTest {
     public void BaseTimeEntity_등록(){
         //given
         LocalDateTime now = LocalDateTime.of(2024,1,2,0,0,0);
+
+        User user = userRepository.save(User.builder()
+                .name("Test User")
+                .email("test@example.com")
+                .role(Role.USER)
+                .build());
+
         postsRepository.save(Posts.builder()
                 .title("title")
                 .content("content")
-                .author("author")
+                .author(user)
                 .build());
         ////DateFormat 변경하는 경우 1
         //String localDateTimeFormat1

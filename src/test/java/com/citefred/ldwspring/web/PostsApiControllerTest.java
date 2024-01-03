@@ -2,6 +2,9 @@ package com.citefred.ldwspring.web;
 
 import com.citefred.ldwspring.domain.posts.Posts;
 import com.citefred.ldwspring.domain.posts.PostsRepository;
+import com.citefred.ldwspring.domain.user.Role;
+import com.citefred.ldwspring.domain.user.User;
+import com.citefred.ldwspring.domain.user.UserRepository;
 import com.citefred.ldwspring.web.dto.PostsSaveRequestDto;
 import com.citefred.ldwspring.web.dto.PostsUpdateRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,6 +47,9 @@ class PostsApiControllerTest {
     private PostsRepository postsRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private WebApplicationContext context;
 
     private MockMvc mvc;
@@ -67,10 +73,17 @@ class PostsApiControllerTest {
         //given
         String title = "title";
         String content = "content";
+
+        User user = userRepository.save(User.builder()
+                .name("Test User")
+                .email("test@example.com")
+                .role(Role.USER)
+                .build());
+
         PostsSaveRequestDto requestDto = PostsSaveRequestDto.builder()
                 .title(title)
                 .content(content)
-                .author("author")
+                .author(user)
                 .build();
 
         String url = "http://localhost:" +port+"/api/v1/posts";
@@ -95,10 +108,16 @@ class PostsApiControllerTest {
     @WithMockUser(roles = "USER")
     public void Posts_수정된다() throws Exception{
         //given
+        User user = userRepository.save(User.builder()
+                .name("Test User")
+                .email("test@example.com")
+                .role(Role.USER)
+                .build());
+
         Posts savedPosts = postsRepository.save(Posts.builder()
                 .title("title")
                 .content("content")
-                .author("author")
+                .author(user)
                 .build());
 
         Long updateId = savedPosts.getId();
