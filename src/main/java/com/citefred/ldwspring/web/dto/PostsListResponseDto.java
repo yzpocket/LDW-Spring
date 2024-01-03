@@ -1,6 +1,7 @@
 package com.citefred.ldwspring.web.dto;
 
 import com.citefred.ldwspring.domain.posts.Posts;
+import com.citefred.ldwspring.domain.user.User;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 public class PostsListResponseDto {
     private Long id;
     private String title;
-    private String author;
+    private User author;
     private LocalDateTime modifiedDate;
 
     public PostsListResponseDto(Posts entity){
