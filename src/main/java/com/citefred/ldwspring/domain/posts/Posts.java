@@ -1,6 +1,7 @@
 package com.citefred.ldwspring.domain.posts;
 
 import com.citefred.ldwspring.domain.BaseTimeEntity;
+import com.citefred.ldwspring.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,10 +22,13 @@ public class Posts extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    private String author;
+    // Posts와 User 간의 N:1 관계 설정
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User author;
 
     @Builder
-    public Posts(String title, String content, String author){
+    public Posts(String title, String content, User author){
         this.title = title;
         this.content = content;
         this.author = author;

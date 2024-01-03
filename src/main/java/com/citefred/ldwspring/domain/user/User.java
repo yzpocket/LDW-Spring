@@ -1,11 +1,14 @@
 package com.citefred.ldwspring.domain.user;
 
 import com.citefred.ldwspring.domain.BaseTimeEntity;
+import com.citefred.ldwspring.domain.posts.Posts;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -28,6 +31,10 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    // User와 Posts 간의 1:N 관계 설정
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Posts> posts = new ArrayList<>();
 
     @Builder
     public User(String name, String email, String picture, Role role) {
