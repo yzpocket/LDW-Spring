@@ -38,9 +38,18 @@ public class PostsService {
         return new PostsResponseDto(entity);
     }
 
+    //JPQL 쿼리 튜닝
+    //@Transactional(readOnly = true)
+    //public List<PostsListResponseDto> findAllDesc(){
+    //    return postsRepository.findAllDesc().stream()
+    //            .map(PostsListResponseDto::new)
+    //            .collect(Collectors.toList());
+    //}
+
+    //QueryDSL 쿼리 튜닝
     @Transactional(readOnly = true)
-    public List<PostsListResponseDto> findAllDesc(){
-        return postsRepository.findAllDesc().stream()
+    public List<PostsListResponseDto> findAllDescUsingQueryDSL() {
+        return postsRepository.findAllDescWithQueryDSL().stream()
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());
     }

@@ -15,9 +15,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class IndexController {
     private final PostsService postsService;
 
+    //@GetMapping("/")
+    //public String index(Model model, @LoginUser SessionUser sessionUser){
+    //    model.addAttribute("posts", postsService.findAllDesc());
+    //    if (sessionUser != null) {
+    //        model.addAttribute("userName", sessionUser.getName());
+    //    }
+    //    return "index";
+    //}
+
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser sessionUser){
-        model.addAttribute("posts", postsService.findAllDesc());
+        model.addAttribute("posts", postsService.findAllDescUsingQueryDSL());
         if (sessionUser != null) {
             model.addAttribute("userName", sessionUser.getName());
         }
