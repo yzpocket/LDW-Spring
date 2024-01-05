@@ -2,6 +2,7 @@ package com.citefred.ldwspring.domain.user;
 
 import com.citefred.ldwspring.domain.BaseTimeEntity;
 import com.citefred.ldwspring.domain.posts.Posts;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -53,5 +54,15 @@ public class User extends BaseTimeEntity {
 
     public String getRoleKey() {
         return this.role.getKey();
+    }
+
+    @JsonCreator  // Jackson에게 어떤 생성자를 사용해야 하는지 알려줌
+    public static User create(String name, String email, String picture, Role role) {
+        return User.builder()
+                .name(name)
+                .email(email)
+                .picture(picture)
+                .role(role)
+                .build();
     }
 }
