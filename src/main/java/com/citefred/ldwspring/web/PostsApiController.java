@@ -1,10 +1,13 @@
 package com.citefred.ldwspring.web;
 
+import com.citefred.ldwspring.config.auth.UserDetailsImpl;
 import com.citefred.ldwspring.service.PostsService;
+import com.citefred.ldwspring.web.dto.MessageDto;
 import com.citefred.ldwspring.web.dto.PostsResponseDto;
 import com.citefred.ldwspring.web.dto.PostsSaveRequestDto;
 import com.citefred.ldwspring.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +18,9 @@ public class PostsApiController {
     private final PostsService postsService;
 
     @PostMapping("/api/v1/posts")
-    public Long save(@RequestBody PostsSaveRequestDto requestDto) {
-        return postsService.save(requestDto);
+    public ResponseEntity<MessageDto> save(@RequestBody PostsSaveRequestDto requestDto,
+                                           @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseEntity.ok().body(postsService.save(requestDto, userDetails.getUser()));
     }
 
     @PutMapping("/api/v1/posts/{id}")

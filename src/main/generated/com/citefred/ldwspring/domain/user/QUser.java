@@ -32,13 +32,15 @@ public class QUser extends EntityPathBase<User> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedDate = _super.modifiedDate;
 
-    public final StringPath name = createString("name");
+    public final StringPath password = createString("password");
 
     public final StringPath picture = createString("picture");
 
     public final ListPath<com.citefred.ldwspring.domain.posts.Posts, com.citefred.ldwspring.domain.posts.QPosts> posts = this.<com.citefred.ldwspring.domain.posts.Posts, com.citefred.ldwspring.domain.posts.QPosts>createList("posts", com.citefred.ldwspring.domain.posts.Posts.class, com.citefred.ldwspring.domain.posts.QPosts.class, PathInits.DIRECT2);
 
     public final EnumPath<Role> role = createEnum("role", Role.class);
+
+    public final StringPath username = createString("username");
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));

@@ -1,16 +1,24 @@
 package com.citefred.ldwspring.domain.user;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-@Getter
-@RequiredArgsConstructor
 public enum Role {
 
-    GUEST("ROLE_GUEST", "손님"),
-    USER("ROLE_USER", "일반 사용자");
+    GUEST(Authority.GUEST),
+    USER(Authority.USER),
+    ADMIN(Authority.ADMIN);
 
-    private final String key;
-    private final String title;
+    private final String authority;
 
+    Role(String authority) {
+        this.authority = authority;
+    }
+
+    public String getAuthority() {
+        return this.authority;
+    }
+
+    public static class Authority {
+        public static final String GUEST = "ROLE_GUEST";
+        public static final String USER = "ROLE_USER";
+        public static final String ADMIN = "ROLE_ADMIN";
+    }
 }

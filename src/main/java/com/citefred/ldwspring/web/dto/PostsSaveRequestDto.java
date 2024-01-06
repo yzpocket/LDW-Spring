@@ -1,7 +1,6 @@
 package com.citefred.ldwspring.web.dto;
 
 import com.citefred.ldwspring.domain.posts.Posts;
-import com.citefred.ldwspring.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,20 +10,12 @@ import lombok.NoArgsConstructor;
 public class PostsSaveRequestDto {
     private String title;
     private String content;
-    private User author;
+    private Long authorId;
 
     @Builder
-    public PostsSaveRequestDto(String title, String content, User author){
+    public PostsSaveRequestDto(String title, String content, Long authorId){
         this.title = title;
         this.content = content;
-        this.author = author;
-    }
-
-    public Posts toEntity(){
-        return Posts.builder()
-                .title(title)
-                .content(content)
-                .author(author)
-                .build();
+        this.authorId = authorId;
     }
 }

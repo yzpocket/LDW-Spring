@@ -2,6 +2,7 @@ package com.citefred.ldwspring.domain.posts;
 
 import com.citefred.ldwspring.domain.BaseTimeEntity;
 import com.citefred.ldwspring.domain.user.User;
+import com.citefred.ldwspring.web.dto.PostsSaveRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,9 +29,9 @@ public class Posts extends BaseTimeEntity {
     private User author;
 
     @Builder
-    public Posts(String title, String content, User author){
-        this.title = title;
-        this.content = content;
+    public Posts(PostsSaveRequestDto postsSaveRequestDto, User author){
+        this.title = postsSaveRequestDto.getTitle();
+        this.content = postsSaveRequestDto.getContent();
         this.author = author;
     }
 

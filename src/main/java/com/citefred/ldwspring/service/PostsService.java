@@ -2,14 +2,11 @@ package com.citefred.ldwspring.service;
 
 import com.citefred.ldwspring.domain.posts.Posts;
 import com.citefred.ldwspring.domain.posts.PostsRepository;
+import com.citefred.ldwspring.domain.user.Role;
 import com.citefred.ldwspring.domain.user.User;
 import com.citefred.ldwspring.domain.user.UserRepository;
-import com.citefred.ldwspring.web.dto.PostsListResponseDto;
-import com.citefred.ldwspring.web.dto.PostsResponseDto;
-import com.citefred.ldwspring.web.dto.PostsSaveRequestDto;
-import com.citefred.ldwspring.web.dto.PostsUpdateRequestDto;
+import com.citefred.ldwspring.web.dto.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +20,13 @@ public class PostsService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Long save(PostsSaveRequestDto requestDto) {
-        User author = requestDto.getAuthor();
-        if (author == null) {
-            throw new IllegalArgumentException("작성자 정보가 없습니다.");
-        }
-        return postsRepository.save(requestDto.toEntity()).getId();
+    public MessageDto save(PostsSaveRequestDto requestDto, User loginUser) {
+        // 로그인한 사용자 확인
+        validateUserAuthority(loginUser);
+
+        Posts newPost = new Posts(requestDto, loginUser);
+        postsRepository.save(newPost);
+        return new MessageDto("게시글 추가가 완료되었습니다.");
     }
 
     @Transactional
@@ -67,5 +65,11 @@ public class PostsService {
         Posts posts = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
         postsRepository.delete(posts);
+    }
+
+    private void validateUserAuthority(User loginUser) {
+        if (!loginUser.getRole().equals(Role.USER)){
+            throw new IllegalArgumentException("해당 작업을 수행할 권한이 없습니다.");
+        }
     }
 }

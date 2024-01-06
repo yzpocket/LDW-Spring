@@ -21,7 +21,10 @@ public class User extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String username;
+
+    @Column(nullable = true)
+    private String password;
 
     @Column(nullable = false)
     private String email;
@@ -38,31 +41,27 @@ public class User extends BaseTimeEntity {
     private List<Posts> posts = new ArrayList<>();
 
     @Builder
-    public User(String name, String email, String picture, Role role) {
-        this.name = name;
+    public User(String username, String email, String picture, Role role) {
+        this.username = username;
         this.email = email;
         this.picture = picture;
         this.role = role;
     }
 
-    public User update(String name, String picture) {
-        this.name = name;
+    public User update(String username, String picture) {
+        this.username = username;
         this.picture = picture;
 
         return this;
     }
 
-    public String getRoleKey() {
-        return this.role.getKey();
-    }
-
-    @JsonCreator  // Jackson에게 어떤 생성자를 사용해야 하는지 알려줌
-    public static User create(String name, String email, String picture, Role role) {
-        return User.builder()
-                .name(name)
-                .email(email)
-                .picture(picture)
-                .role(role)
-                .build();
-    }
+    //@JsonCreator  // Jackson에게 어떤 생성자를 사용해야 하는지 알려줌
+    //public static User create(String username, String email, String picture, Role role) {
+    //    return User.builder()
+    //            .username(username)
+    //            .email(email)
+    //            .picture(picture)
+    //            .role(role)
+    //            .build();
+    //}
 }
